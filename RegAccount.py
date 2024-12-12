@@ -66,29 +66,6 @@ def save_password_to_file(file_path, value):
     with open(file_path, "a") as file:
         file.write(f"{value}                {datetime.now()}\n")
 
-# #Tạo companyName từ tên và họ
-
-# COMPANY_FILE = "companyname.txt"
-
-# def load_existing_companyName(file_path):
-#     if os.path.exists(file_path):
-#         with open(file_path, "r") as file:
-#             return set(file.read().splitlines())
-#     return set()
-
-# def save_companyName_to_file(file_path, companyName):
-#     with open(file_path, "a") as file:
-#         file.write(companyName + "\n")
-
-# def generate_companyName(existing_companyName):
-#     while True:
-#         first_names = random.choices(first_names)
-#         last_names = random.choices(last_names)
-#         companyName = f"{first_names}{last_names}"
-#         if companyName not in existing_companyName:
-#             existing_companyName.add(companyName)
-#             save_companyName_to_file(COMPANY_FILE, companyName)
-#             return companyName
 
 #Tạo số điện thoại
 
@@ -297,11 +274,46 @@ try:
     #Hoàn thành
     pressSuccess = driver.find_element(By.ID, 'btnCompleteOrder')
     pressSuccess.click()
-    time.sleep(1000)
+    time.sleep(random.choice(list1))
 
+
+    #Tick client area
+    clickClient = driver.find_element(By.XPATH, '//*[@id="order-standard_cart"]/div/div[2]/div[5]/a')
+    clickClient.click()
+    time.sleep(random.choice(list1))
+
+    #Click Service 
+    clickClient = driver.find_element(By.XPATH, '//*[@id="main-body"]/div/div[1]/div[2]/div[1]/div/div[1]/a')
+    clickClient.click()
+    time.sleep(random.choice(list1))
+
+    clickClient = driver.find_element(By.XPATH, '//*[@id="tableServicesList"]/tbody/tr')
+    clickClient.click()
+    time.sleep(random.choice(list1))
+
+    clickClient = driver.find_element(By.XPATH, '//*[@id="manage"]/div/div[1]/div/a')
+    clickClient.click()
+    time.sleep(random.choice(list1))
+
+    clickClient = driver.find_element(By.XPATH, '//*[@id="app"]/div[2]/div/div/div/div[4]/button')
+    clickClient.click()
+    time.sleep(random.choice(list1))
+
+    
+    clickClient = driver.find_element(By.ID, 'userAuthorizationAccepted')
+    clickClient.click()
+    time.sleep(random.choice(list1))
 
 
 except Exception as ex:
     print(f"Có lỗi ở mục nhập văn bản: {ex}")
-    
+
+
+
+
+
+#======================================================================================================================================#
+
+
+
 

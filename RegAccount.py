@@ -110,7 +110,7 @@ list1 = [5, 6, 7]
 
 #Mở chrome
 driver = uc.Chrome()
-
+driver.implicitly_wait(10)
 #mở link 
 try:
     driver.get('https://billing.sparkedhost.com/store/free-trials/24-hour-trial-enterprise-4-gb')
@@ -119,41 +119,45 @@ except:
     print("Lỗi mục mở link");
 
 
+driver.implicitly_wait(10)
 #Chọn server location
 try:
     serverLocation = driver.find_element(By.XPATH, "//*[@id=\"productConfigurableOptions\"]/div[1]/div[2]/div/div[7]/div/div/label/div[1]/ins")
     serverLocation.click()
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 except:
     print("Lỗi mục chọn server Location")
 
+driver.implicitly_wait(10)
 #Nhấn chọn continue
 try:
-    continueBtn = driver.find_element(By.ID, "btnCompleteProductConfig");
+    continueBtn = driver.find_element(By.XPATH, '//*[@id="btnCompleteProductConfig"]');
     continueBtn.click()
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 except:
     print("Lỗi ở mục nút continue")
 
+driver.implicitly_wait(10)
 #Nhấn chọn checkout
 try:
-    checkoutBtn = driver.find_element(By.ID, "checkout")
+    checkoutBtn = driver.find_element(By.XPATH, '//*[@id="checkout"]')
     checkoutBtn.click()
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 except:
     print("Lỗi ở mục checkout")
 
+driver.implicitly_wait(10)
 #Nhập văn bản
 try:
     #nhập tên
     inputFirstName = driver.find_element(By.ID, 'inputFirstName')
     inputFirstName.send_keys("Hien")
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 
     #nhập họ
     inputLastName = driver.find_element(By.ID, 'inputLastName')
     inputLastName.send_keys('Tran')
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 
 #Nhập email  
     # Tải email đã tạo từ tệp
@@ -165,7 +169,7 @@ try:
     #Nhập
     inputEmail = driver.find_element(By.ID, 'inputEmail')
     inputEmail.send_keys(new_email)
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 
     #Chọn quốc gia
     pickNational = driver.find_element(By.XPATH, '//*[@id="personalInformation"]/div/div[4]/div/div/div/div/div[2]')
@@ -186,49 +190,49 @@ try:
     #Nhập
     inputPhone = driver.find_element(By.ID, 'inputPhone')
     inputPhone.send_keys(new_phone)
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
         
 #Nhập thông tin bill
     #Nhập companyName:
     inputCompanyName = driver.find_element(By.ID, 'inputCompanyName')
     inputCompanyName.send_keys(random.choice(companyName))
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 
     #Nhập Street Address 1
     inputAddress1 = driver.find_element(By.ID, 'inputAddress1')
     inputAddress1.send_keys(random.choice(streetAddress1))
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 
     #Nhập Street Address 2
     inputAddress2 = driver.find_element(By.ID, 'inputAddress2')
     inputAddress2.send_keys(random.choice(streetAddress2))
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 
     #Nhập tên Thành phố
     inputCity = driver.find_element(By.ID, 'inputCity')
     inputCity.send_keys(random.choice(cityName))
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 
     #Nhập postCode
     inputPostcode = driver.find_element(By.ID, 'inputPostcode')
     inputPostcode.send_keys(random.choice(postCode))
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 
     #Chọn Nước Việt Nam
     select_element = driver.find_element(By.ID, 'inputCountry')
     select = Select(select_element)
     select.select_by_value("VN")
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 
     #Nhập quận / Tỉnh
     stateinput = driver.find_element(By.ID, 'stateinput')
     stateinput.send_keys(random.choice(stateName))
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 
     #Tick chọn lớn hơn 13 tuổi
     TickOverAgeBtn = driver.find_element(By.XPATH, '//*[@id="iCheck-customfield279"]/ins')
     TickOverAgeBtn.click()
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 
 
     #Generate password
@@ -242,7 +246,7 @@ try:
     CopyToClipboard = pyperclip.paste()
     save_password_to_file(PASSWORD_FILE, CopyToClipboard)
     print("Nội dung sao chép vào clipboard:", CopyToClipboard)
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 
     #Chọn phương thức thanh toán
     listChoice = [1, 2, 3, 4, 5]
@@ -263,47 +267,20 @@ try:
     else:
         clickChoice = driver.find_element(By.XPATH, '//*[@id="paymentGatewaysContainer"]/div/div[1]/div/div[6]/div/div/label')
         clickChoice.click()
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 
 
     #Tick i have read
     tickIHaveRead = driver.find_element(By.XPATH, '//*[@id="iCheck-accepttos"]/ins')
     tickIHaveRead.click()
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 
     #Hoàn thành
     pressSuccess = driver.find_element(By.ID, 'btnCompleteOrder')
     pressSuccess.click()
-    time.sleep(random.choice(list1))
+    #time.sleep(random.choice(list1))
 
-
-    #Tick client area
-    clickClient = driver.find_element(By.XPATH, '//*[@id="order-standard_cart"]/div/div[2]/div[5]/a')
-    clickClient.click()
-    time.sleep(random.choice(list1))
-
-    #Click Service 
-    clickClient = driver.find_element(By.XPATH, '//*[@id="main-body"]/div/div[1]/div[2]/div[1]/div/div[1]/a')
-    clickClient.click()
-    time.sleep(random.choice(list1))
-
-    clickClient = driver.find_element(By.XPATH, '//*[@id="tableServicesList"]/tbody/tr')
-    clickClient.click()
-    time.sleep(random.choice(list1))
-
-    clickClient = driver.find_element(By.XPATH, '//*[@id="manage"]/div/div[1]/div/a')
-    clickClient.click()
-    time.sleep(random.choice(list1))
-
-    clickClient = driver.find_element(By.XPATH, '//*[@id="app"]/div[2]/div/div/div/div[4]/button')
-    clickClient.click()
-    time.sleep(random.choice(list1))
-
-    
-    clickClient = driver.find_element(By.ID, 'userAuthorizationAccepted')
-    clickClient.click()
-    time.sleep(random.choice(list1))
-
+    print("Đăng ký acc thành công !!!")
 
 except Exception as ex:
     print(f"Có lỗi ở mục nhập văn bản: {ex}")

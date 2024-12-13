@@ -9,58 +9,38 @@ from selenium.webdriver.support.ui import Select
 import pyperclip
 from datetime import date, datetime
 
-
-# mảng lưu trữ các số giây chờ của chương trình
 list1 = [5, 6, 7]
 
-# #Đăng nhập
+#Mở chrome
 driver = uc.Chrome()
+driver.implicitly_wait(10)
+
+
 
 try:
-    driver.get('https://control.sparkedhost.us/auth/login')
-except Exception as ex:
-    print(f"Mở url thất bại - {ex}")
+    driver.get('https://control.sparkedhost.us/auth/login')    
+    
+    #press login via billing
+    driver.implicitly_wait(10)
+    pressLoginViaBilling = driver.find_element(By.XPATH, '//*[@id="app"]/div[2]/div/div/div/div[4]/button')
+    pressLoginViaBilling.click()
+    
+    #enter email
+    enterEmail = driver.find_element(By.XPATH, '//*[@id="inputEmail"]')
+    enterEmail.send_keys('trannam9320@gmail.com')
 
+    #enter password 
+    enterPassword = driver.find_element(By.XPATH, '//*[@id="inputPassword"]')
+    enterPassword.send_keys('o(E,rGHPyuzH')
 
-#Đọc File
-
-#Lấy thong tin email
-EMAIL_FILE = "emails.txt"
-try:
-    with open(EMAIL_FILE, 'r') as f:
-        lines = f.readlines()
-    email =  lines[-1] if lines else None 
-
-    print(f"email: {email}")
-except Exception as ex:
-    print(f"Đọc file không thành công - {ex}")
-#Lấy thông tin password
-PASSWORD_FILE = "password.txt"
-passwords = []
-with open(PASSWORD_FILE, 'r') as f:
-    for line in f:
-        password = line.split()[0]
-        passwords.append(password)
-
-
+    #press Login
+    pressLogin = driver.find_element(By.XPATH, '//*[@id="btnLogin"]')
+    pressLogin.click()
 
     
 
-#Điền thông tin đăng nhập
-try:
-    # enter_email = driver.find_element(By.XPATH, '//*[@id="login-form"]/div[1]/input')
-    # enter_email.send_keys(email)
-    # time.sleep(random.choice(list1))
-
-    # enter_password = driver.find_element(By.XPATH, '//*[@id="login-form"]/div[2]/input')
-    # for value in passwords:
-    #     enter_password.send_keys(password)
-    # time.sleep(random.choice(list1))
-
-    pressLogin = driver.find_element(By.XPATH, '//*[@id="app"]/div[2]/div/div/div/div[4]/button')
-    pressLogin.click()
-    time.sleep(random.choice(list1))
+    print("Chạy thành công")
+    time.sleep(10000)
+    driver.quit()
 except Exception as ex:
-    print(f"Điền thông tin thất bại: {ex}")
-
-time.sleep(1000000)
+    print(f"Có lỗi: {ex}")

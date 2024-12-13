@@ -1,67 +1,52 @@
 import random
+import string
 import os
 
-# Đường dẫn tệp để lưu các số điện thoại
-PHONE_FILE = "vietnamesePhonenumber.txt"
+first_names = ["Nguyen", "Tran", "Le", "Pham", "Hoang", "Phan", "Vu", "Dang", "Bui", "Do"]
+last_names = ["Anh", "Hoa", "Nam", "Linh", "Minh", "Thuy", "Thanh", "Duc", "Hieu", "Huong"]
+EMAIL_FILE = "function\emails.txt"
 
-def load_existing_phones(file_path):
-    """
-    Đọc các số điện thoại đã tạo từ tệp.
-
-    Args:
-        file_path (str): Đường dẫn tới tệp lưu số điện thoại.
-
-    Returns:
-        set: Tập hợp các số điện thoại đã lưu.
-    """
+def clean_email_file(file_path):
+    """Xóa các email trùng lặp và dòng trống trong tệp."""
     if os.path.exists(file_path):
         with open(file_path, "r") as file:
-            return set(file.read().splitlines())
-    return set()
+            emails = {email.strip() for email in file if email.strip()}
+        with open(file_path, "w") as file:
+            for email in sorted(emails):  # Ghi lại các email đã làm sạch
+                file.write(email + "\n")
 
-def save_phone_to_file(file_path, phone):
-    """
-    Ghi số điện thoại mới vào tệp.
+def load_existing_emails(file_path):
+    """Đọc các email đã tạo từ tệp."""
+    if not os.path.exists(file_path):
+        with open(file_path, "w") as file:
+            pass
+    with open(file_path, "r") as file:
+        return {email.strip() for email in file if email.strip()}
 
-    Args:
-        file_path (str): Đường dẫn tới tệp lưu số điện thoại.
-        phone (str): Số điện thoại cần lưu.
-    """
+def save_email_to_file(file_path, email):
+    """Ghi email mới vào tệp."""
     with open(file_path, "a") as file:
-        file.write(phone + "\n")
+        file.write(email + "\n")
 
-def generate_vietnam_phone(existing_phones):
-    """
-    Tạo số điện thoại ngẫu nhiên của Việt Nam.
-    Đảm bảo số điện thoại không bị trùng với những số đã tạo trước đó.
+def generate_email(existing_emails, max_attempts=10000):
+    """Tạo email ngẫu nhiên và đảm bảo không trùng."""
+    for _ in range(max_attempts):  # Giới hạn số lần thử
+        first_name = random.choice(first_names)
+        last_name = random.choice(last_names)
+        random_numbers = ''.join(random.choices(string.digits, k=4))
+        email = f"{first_name}{last_name}{random_numbers}@gmail.com".lower()
+        if email not in existing_emails:
+            existing_emails.add(email)
+            save_email_to_file(EMAIL_FILE, email)  # Lưu email vào tệp
+            return email
+    raise ValueError("Không thể tạo email mới: đã đạt giới hạn số lần thử.")
 
-    Args:
-        existing_phones (set): Tập hợp các số điện thoại đã tạo trước đó.
+# Main logic
+clean_email_file(EMAIL_FILE)
+existing_emails = load_existing_emails(EMAIL_FILE)
 
-    Returns:
-        str: Số điện thoại hợp lệ và không trùng lặp.
-    """
-    prefixes = [
-        "086", "096", "097", "098",       # Viettel
-        "032", "033", "034", "035", "036", "037", "038", "039",  # Viettel
-        "090", "093",                    # Mobifone
-        "070", "079", "077", "076", "078",  # Mobifone
-        "091", "094",                    # Vinaphone
-        "081", "082", "083", "084", "085",  # Vinaphone
-        "092",                           # Vietnamobile
-        "056", "058"                     # Vietnamobile
-    ]
-
-    while True:
-        prefix = random.choice(prefixes)
-        random_numbers = ''.join(random.choices("0123456789", k=7))
-        phone_number = f"{prefix}{random_numbers}"
-        if phone_number not in existing_phones:
-            existing_phones.add(phone_number)
-            save_phone_to_file(PHONE_FILE, phone_number)  # Lưu số điện thoại vào tệp
-            return phone_number
-
-# Ví dụ sử dụng
-existing_phones = load_existing_phones(PHONE_FILE)
-new_phone = generate_vietnam_phone(existing_phones)
-print("Số điện thoại mới:", new_phone)
+try:
+    new_email = generate_email(existing_emails)
+    print(f"Email mới: {new_email}")
+except ValueError as e:
+    print(str(e))

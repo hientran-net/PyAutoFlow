@@ -9,6 +9,8 @@ from selenium.webdriver.support.ui import Select
 import pyperclip
 from datetime import date, datetime
 from colorama import Fore, Back, Style, init
+from function.discord import send_ip_address, read_last_line
+import asyncio
 
 init()
 
@@ -53,6 +55,11 @@ def save_to_file(file_path, value):
 # ============================================================================================================================================ #
 
 
+
+    
+
+
+# ============================================================================================================================================ #
 #Source code chính:
 
 def login_and_setup():
@@ -110,65 +117,69 @@ def login_and_setup():
         save_to_file(IPADDRESS_FILE, ipAddress)
         print(f"{Fore.CYAN}Lưu ip vào file thành công !!!")
 
-    #Download/Upload file save
-        print("Chương trình đang chờ bạn thao tác. Nhấn phím bất kỳ rồi Enter để tiếp tục...")
-        input()  # Chương trình sẽ chờ đến khi người dùng nhấn Enter
-        print("Chương trình tiếp tục!\n")
+        # # Đọc IP mới nhất và gửi
+        # latest_ip = read_last_line(IPADDRESS_FILE)
+        # if latest_ip:
+        #     print(f"{Fore.YELLOW}Đang gửi IP mới nhất qua Discord...")
+        #     asyncio.run(send_ip_address(latest_ip))
+        # else:
+        #     print(f"{Fore.RED}Không tìm thấy IP trong file!")
 
-        chooseFiles = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[1]/div[2]/div[1]/div[3]/a[2]')
-        chooseFiles.click()
-        print(f"{Fore.LIGHTYELLOW_EX}File => ", end="")
+    # #Download/Upload file save
+    #     print("Chương trình đang chờ bạn thao tác. Nhấn phím bất kỳ rồi Enter để tiếp tục...")
+    #     input()  # Chương trình sẽ chờ đến khi người dùng nhấn Enter
+    #     print("Chương trình tiếp tục!\n")
 
-        choosePal = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[5]/a')
-        choosePal.click()
-        print(f"{Fore.LIGHTYELLOW_EX}Pal => ", end="")
+    #     chooseFiles = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[1]/div[2]/div[1]/div[3]/a[2]')
+    #     chooseFiles.click()
+    #     print(f"{Fore.LIGHTYELLOW_EX}File => ", end="")
 
-        chooseSaved = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[4]/a')
-        chooseSaved.click()
-        print(f"{Fore.LIGHTYELLOW_EX}Saved => ", end="")
+    #     choosePal = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[5]/a')
+    #     choosePal.click()
+    #     print(f"{Fore.LIGHTYELLOW_EX}Pal => ", end="")
 
-        chooseSaveGames = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[3]/a')
-        chooseSaveGames.click()
-        print(f"{Fore.LIGHTYELLOW_EX}SaveGames => ", end="")
+    #     chooseSaved = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[4]/a')
+    #     chooseSaved.click()
+    #     print(f"{Fore.LIGHTYELLOW_EX}Saved => ", end="")
 
-        choose0 = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[1]/a')
-        choose0.click()
-        print(f"{Fore.LIGHTYELLOW_EX}0 ", end="")
+    #     chooseSaveGames = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[3]/a')
+    #     chooseSaveGames.click()
+    #     print(f"{Fore.LIGHTYELLOW_EX}SaveGames => ", end="")
 
-        print("\nChương trình đang chờ bạn thao tác. Nhấn phím bất kỳ rồi Enter để tiếp tục...")
-        input()  # Chương trình sẽ chờ đến khi người dùng nhấn Enter
-        print("Chương trình tiếp tục!\n")
+    #     choose0 = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[1]/a')
+    #     choose0.click()
+    #     print(f"{Fore.LIGHTYELLOW_EX}0 ", end="")
 
-    #Quay về Main menu -> tiến vào PalWorldSettings.ini
-        chooseFiles = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[1]/div[2]/div[1]/div[3]/a[2]')
-        chooseFiles.click()
-        print(f"{Fore.LIGHTYELLOW_EX}Files ", end="")
+    #     print("\nChương trình đang chờ bạn thao tác. Nhấn phím bất kỳ rồi Enter để tiếp tục...")
+    #     input()  # Chương trình sẽ chờ đến khi người dùng nhấn Enter
+    #     print("Chương trình tiếp tục!\n") 
 
-        choosePal = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[5]/a')
-        choosePal.click()
-        print(f"{Fore.LIGHTYELLOW_EX}Pal => ", end="")
+    # #Quay về Main menu -> tiến vào PalWorldSettings.ini
+    #     chooseFiles = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[1]/div[2]/div[1]/div[3]/a[2]')
+    #     chooseFiles.click()
+    #     print(f"{Fore.LIGHTYELLOW_EX}Files ", end="")
 
-        chooseSaved = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[4]/a')
-        chooseSaved.click()
-        print(f"{Fore.LIGHTYELLOW_EX}Saved => ", end="")
+    #     choosePal = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[5]/a')
+    #     choosePal.click()
+    #     print(f"{Fore.LIGHTYELLOW_EX}Pal => ", end="")
 
-        chooseConfig = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[1]/a')
-        chooseConfig.click()
-        print(f"{Fore.LIGHTYELLOW_EX}Config => ", end="")
+    #     chooseSaved = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[4]/a')
+    #     chooseSaved.click()
+    #     print(f"{Fore.LIGHTYELLOW_EX}Saved => ", end="")
 
-        chooseLinuxServer = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[2]/a')
-        chooseLinuxServer.click()
-        print(f"{Fore.LIGHTYELLOW_EX}LinuxServer", end="")
+    #     chooseConfig = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[1]/a')
+    #     chooseConfig.click()
+    #     print(f"{Fore.LIGHTYELLOW_EX}Config => ", end="")
 
-
-        print("Chương trình đang tạm dừng. Nhấn phím bất kỳ rồi Enter để tiếp tục...")
-        input()  # Chương trình sẽ chờ đến khi người dùng nhấn Enter
-        print("Chương trình tiếp tục!\n")
+    #     chooseLinuxServer = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[2]/a')
+    #     chooseLinuxServer.click() 
+    #     print(f"{Fore.LIGHTYELLOW_EX}LinuxServer", end="")
+        return browser
 
     except Exception as ex:
-        print(f"{Fore.RED}Có lỗi trong lúc mở link !!!")
-    finally:
+        print(f"{Fore.RED}Có lỗi trong lúc đăng nhập: {ex}")
         browser.quit()
+        return None
 
 
 

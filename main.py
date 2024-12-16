@@ -10,7 +10,7 @@ from selenium.webdriver.support.ui import Select
 from datetime import date, datetime
 from colorama import Fore, Back, Style, init
 
-from function.discord import read_last_line, send_ip_address
+from function.discord import read_last_line, send_ip_address, send_image, choose_channels, send_reset_schedule
 
 # ============================================================================================================================================ #
 
@@ -21,135 +21,143 @@ init()
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def handle_file_operations(browser):
+def handle_server_menu(browser):
+    """Menu quản lý server"""
     while True:
         clear_screen()
-        print(f"{Fore.CYAN}=== QUẢN LÝ FILE SAVE ===")
-        print(f"{Style.RESET_ALL}2.1.1. Upload file save")
-        print("2.1.2. Download file save")
+        print(f"{Fore.CYAN}=== QUẢN LÝ SERVER ===")
+        print(f"{Style.RESET_ALL}1. Vào phần SaveFileLocation")
+        print("2. Vào phần PalWorldSetting.ini")
+        print("3. Bật server")
+        print("4. Reset server")
+        print("5. Tắt server")
         print("0. Quay lại")
         
         choice = input(f"\n{Fore.YELLOW}Nhập lựa chọn của bạn: {Style.RESET_ALL}")
         
-        if choice == "2.1.1":
-            file_path = input("\nNhập đường dẫn file cần upload: ")
-            if os.path.exists(file_path):
-                # Thêm code upload file ở đây
-                print(f"{Fore.GREEN}Đang upload file...")
-                time.sleep(2)  # Giả lập thời gian upload
-                print("Upload thành công!")
-            else:
-                print(f"{Fore.RED}Đường dẫn file không tồn tại!")
-                
-        elif choice == "2.1.2":
-            save_path = input("\nNhập vị trí lưu file download: ")
-            if os.path.isdir(save_path):
-                # Thêm code download file ở đây
-                print(f"{Fore.GREEN}Đang download file...")
-                time.sleep(2)  # Giả lập thời gian download
-                print("Download thành công!")
-            else:
-                print(f"{Fore.RED}Thư mục lưu file không tồn tại!")
-                
-        elif choice == "0":
-            break
+        try:
+            if choice == "1":
+                print(f"{Fore.GREEN}Đang mở SaveFileLocation...")
+                #Nhấn vào file
+                pressFile = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[1]/div[2]/div[1]/div[3]/a[2]')
+                pressFile.click()  
+                #Nhấn vào Pal
+                pressPal = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[6]/a')
+                pressPal.click()
+                #Nhấn vào Save
+                pressSave = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[4]/a')
+                pressSave.click()
+                #Nhấn vào SavedGame
+                pressSavedGame = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[3]/a')
+                pressSavedGame.click()
+                #Nhấn vào 0
+                press0 = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[1]/a')
+                press0.click()
+                print(f"{Fore.GREEN}Đã mở SaveFileLocation thành công!")
+
+            elif choice == "2":
+                print(f"{Fore.GREEN}Đang mở PalWorldSetting.ini...")
+                #Nhấn vào file
+                pressFile = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[1]/div[2]/div[1]/div[3]/a[2]')
+                pressFile.click()  
+                #Nhấn vào Pal
+                pressPal = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[6]/a')
+                pressPal.click()
+                #Nhấn vào Save
+                pressSave = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[4]/a')
+                pressSave.click()
+                #Nhấn vào Config
+                pressConfig = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[1]/a')
+                pressConfig.click()
+                #Nhấn vào LinuxServer
+                pressLinuxServer = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[2]/a')
+                pressLinuxServer.click()
+                #Nhấn vào file PalWorldSetting.ini
+                pressPalWorldSetting = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[26]/a')
+                pressPalWorldSetting.click()
+                print(f"{Fore.GREEN}Đã mở PalWorldSetting.ini thành công!")
+
+            elif choice == "3":
+                print(f"{Fore.GREEN}Đang bật server...")
+                pressStart = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[1]/div[2]/div[1]/div[2]/div[2]/button[1]')
+                pressStart.click()
+                print(f"{Fore.GREEN}Đã gửi lệnh bật server!")
+
+            elif choice == "4":
+                print(f"{Fore.GREEN}Đang reset server...")
+                pressReset = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[1]/div[2]/div[1]/div[2]/div[2]/button[2]')
+                pressReset.click()
+                print(f"{Fore.GREEN}Đã gửi lệnh reset server!")
+
+            elif choice == "5":
+                print(f"{Fore.GREEN}Đang tắt server...")
+                pressStop = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[1]/div[2]/div[1]/div[2]/div[2]/button[3]')
+                pressStop.click()
+                print(f"{Fore.GREEN}Đã gửi lệnh tắt server!")
+
+            elif choice == "0":
+                break
+
+        except Exception as ex:
+            print(f"{Fore.RED}Lỗi: {ex}")
         
         input("\nNhấn Enter để tiếp tục...")
 
-def handle_login_menu(browser):  # Thêm tham số browser
+def handle_discord_menu():
+    """Menu tương tác với Discord"""
     while True:
         clear_screen()
-        print(f"{Fore.CYAN}=== MENU SAU ĐĂNG NHẬP ===")
-        print(f"{Style.RESET_ALL}2.1. Vào phần SaveFileLocation.")
-        print("2.2. Vào phần PalWorldSetting.ini.")
-        print("2.3. Reset server.")
-        print("2.4. Gửi IP qua Discord.")
-        print("0. Đăng xuất - Đóng trình duyệt.")
+        print(f"{Fore.CYAN}=== TƯƠNG TÁC DISCORD ===")
+        print(f"{Style.RESET_ALL}1. Gửi IP server")
+        print("2. Gửi thông báo kèm hình ảnh")
+        print("3. Gửi thông báo lịch reset server")
+        print("0. Quay lại")
         
         choice = input(f"\n{Fore.YELLOW}Nhập lựa chọn của bạn: {Style.RESET_ALL}")
         
-        if choice == "2.1":
-            print(f"{Fore.GREEN}Đang mở SaveFileLocation...")
-            # Sử dụng browser đã đăng nhập để điều hướng
-            try:
-                # Điều hướng đến trang SaveFileLocation
-                    #Nhấn vào file
-                pressFile = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[1]/div[2]/div[1]/div[3]/a[2]')
-                pressFile.click()  
-                    #Nhấn vào Pal
-                pressPal = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[6]/a')
-                pressPal.click()
-                    #Nhấn vào Save
-                pressSave = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[4]/a')
-                pressSave.click()
-                    #Nhấn vào SavedGame
-                pressSavedGame = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[3]/a')
-                pressSavedGame.click()
-                    #Nhấn vào 0
-                press0 = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[1]/a')
-                press0.click()
-
-
-                # Đợi load trang
-                time.sleep(2)
-                handle_file_operations(browser)
-            except Exception as ex:
-                print(f"{Fore.RED}Lỗi khi mở SaveFileLocation: {ex}")
-            
-        elif choice == "2.2":
-            print(f"{Fore.GREEN}Đang mở PalWorldSetting.ini...")
-            try:
-                # Điều hướng đến trang settings
-                    #Nhấn vào file
-                pressFile = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[1]/div[2]/div[1]/div[3]/a[2]')
-                pressFile.click()  
-                    #Nhấn vào Pal
-                pressPal = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[6]/a')
-                pressPal.click()
-                    #Nhấn vào Save
-                pressSave = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[4]/a')
-                pressSave.click()
-                    #Nhấn vào Config
-                pressConfig = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[1]/a')
-                pressConfig.click()
-                    #Nhấn vào LinuxServer
-                pressLinuxServer = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[2]/a')
-                pressLinuxServer.click()
-                    #Nhấn vào file PalWorldSetting.ini
-                pressPalWorldSetting = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[2]/div[2]/div/div[26]/a')
-                pressPalWorldSetting.click()
-
-                # Thêm code xử lý settings
-            except Exception as ex:
-                print(f"{Fore.RED}Lỗi khi mở Settings: {ex}")
-#Chưa test
-        elif choice == "2.3":
-            print(f"{Fore.GREEN}Đang reset server...")
-            try:
-                pressReset = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[1]/div[2]/div[1]/div[2]/div[2]/button[2]')
-                pressReset.click()
-                while True:
-                    textStatus = browser.find_element(By.XPATH, '//*[@id="app"]/div[2]/div[1]/div[2]/div[1]/div[2]/p[2]')
-                    print(textStatus.text)
-                    if textStatus.text == 'RUNNING (0h 0m 10s)':
-                        print("Reset server thành công!")
-                        break
-                    time.sleep(1)
-            except Exception as ex:
-                print(f"{Fore.RED}Lỗi khi reset server: {ex}")
-
-        elif choice == "2.4":
+        if choice == "1":
             print(f"{Fore.GREEN}Đang gửi IP mới nhất qua Discord...")
-            # Đọc IP mới nhất và gửi
             latest_ip = read_last_line(loginAndSetup.IPADDRESS_FILE)
             if latest_ip:
                 asyncio.run(send_ip_address(latest_ip))
-
+                
+        elif choice == "2":
+            print(f"{Fore.GREEN}Gửi hình ảnh qua Discord...")
+            image_path = input("Nhập đường dẫn đến file ảnh: ")
+            message = input("Nhập tin nhắn kèm theo (Enter để bỏ qua): ")
+            target_channels = choose_channels()
+            asyncio.run(send_image(image_path, message if message else None, target_channels))
+            
+        elif choice == "3":
+            print(f"{Fore.GREEN}Gửi thông báo lịch reset server...")
+            off_time = input("Nhập thời gian TẮT server (VD: 22:30): ")
+            on_time = input("Nhập thời gian BẬT server (VD: 22:50): ")
+            asyncio.run(send_reset_schedule(off_time, on_time))
+            
         elif choice == "0":
-            browser.quit()  # Đóng browser khi đăng xuất
             break
-            #tesst ttt
+            
         input("\nNhấn Enter để tiếp tục...")
+
+def handle_login_menu(browser):
+    while True:
+        clear_screen()
+        print(f"{Fore.CYAN}=== MENU SAU ĐĂNG NHẬP ===")
+        print(f"{Style.RESET_ALL}1. Tương tác với server")
+        print("2. Tương tác với Discord")
+        print("0. Đăng xuất")
+        
+        choice = input(f"\n{Fore.YELLOW}Nhập lựa chọn của bạn: {Style.RESET_ALL}")
+        
+        if choice == "1":
+            handle_server_menu(browser)
+            
+        elif choice == "2":
+            handle_discord_menu()
+            
+        elif choice == "0":
+            browser.quit()
+            break
 
 def main_menu():
     browser = None  # Khởi tạo biến browser

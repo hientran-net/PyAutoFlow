@@ -4,10 +4,13 @@ import asyncio
 from colorama import Fore, Style
 from datetime import datetime, timedelta
 import os
+from dotenv import load_dotenv
 
+# Load biến môi trường từ file .env
+load_dotenv()
 
-# Khởi tạo bot với token
-TOKEN = 'MTMxNzQ3MTk2Nzk5NzMzMzU3NQ.G2ulXB.b1iycoFMzxmK0ARJpOoUQct1iYcTPw34PJuoDU'  # Thay bằng token của bot bạn
+# Đọc token từ biến môi trường
+TOKEN = os.getenv('DISCORD_TOKEN')
 
 # Thêm các CHANNEL_ID mới
 CHANNELS = {
